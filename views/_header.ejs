@@ -22,21 +22,26 @@
 <body>
   <nav>
     <span class="brand">MyApp</span>
-    <div class="nav-links">
+    <% if (currentUser) { %>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&#9776;</button>
+    <% } %>
+    <div class="nav-links" id="navLinks">
       <% if (currentUser) { %>
         <a href="/dashboard"><%= t.nav_dashboard %></a>
         <a href="/duties"><%= t.nav_my_duties %></a>
         <a href="/depot"><%= t.nav_depot %></a>
         <a href="/profile"><%= t.nav_profile %></a>
         <% if (currentUser.is_admin) { %><a href="/admin"><%= t.nav_admin %></a><% } %>
-        <div class="theme-switcher" title="Appearance">
-          <button class="theme-btn" data-t="light"  aria-label="Light mode">☀</button>
-          <button class="theme-btn" data-t="system" aria-label="System theme">⊙</button>
-          <button class="theme-btn" data-t="dark"   aria-label="Dark mode">☾</button>
-        </div>
-        <div class="locale-switcher" title="Language">
-          <button class="locale-btn" data-l="en">EN</button>
-          <button class="locale-btn" data-l="de">DE</button>
+        <div class="nav-controls">
+          <div class="theme-switcher" title="Appearance">
+            <button class="theme-btn" data-t="light"  aria-label="Light mode">☀</button>
+            <button class="theme-btn" data-t="system" aria-label="System theme">⊙</button>
+            <button class="theme-btn" data-t="dark"   aria-label="Dark mode">☾</button>
+          </div>
+          <div class="locale-switcher" title="Language">
+            <button class="locale-btn" data-l="en">EN</button>
+            <button class="locale-btn" data-l="de">DE</button>
+          </div>
         </div>
         <a href="/auth/logout"><%= t.nav_logout %></a>
       <% } %>
@@ -67,5 +72,14 @@
             .then(function () { location.reload(); });
         });
       });
+
+      var navToggle = document.getElementById('navToggle');
+      var navLinks  = document.getElementById('navLinks');
+      if (navToggle && navLinks) {
+        navToggle.addEventListener('click', function () {
+          navLinks.classList.toggle('open');
+          navToggle.setAttribute('aria-expanded', navLinks.classList.contains('open'));
+        });
+      }
     })();
   </script>

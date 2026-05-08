@@ -13,6 +13,7 @@ A web app for bus drivers to view their upcoming duty schedule and check where v
 - **Admin panel** – manage users, assign drivers, view all duties across all drivers, update bus status
 - **Theme switcher** – per-user light / dark / system preference, saved to the database
 - **Localisation** – per-user language preference (English / German), saved to the database; all UI strings translated
+- **Responsive UI** – mobile-first layout with hamburger nav; works on desktop, tablet, and smartphone
 
 ## Tech stack
 
@@ -145,6 +146,19 @@ The app ships with **English** (default) and **German** translations. Every user
 | Switching | Nav bar toggle → `POST /settings/locale` → page reload |
 
 To add another language, add a new key block to `src/i18n.js` matching the structure of the existing `en` entry, then add the locale code to the allowlist in `src/routes/user.js`.
+
+## Responsive design
+
+The UI is fully responsive for desktop, tablet, and smartphone screens.
+
+| Breakpoint | Behaviour |
+|---|---|
+| > 900 px (desktop) | Full horizontal nav, up to 900 px wide content area |
+| ≤ 900 px (tablet) | Slightly reduced padding, 2-column depot spots |
+| ≤ 768 px (mobile) | Hamburger nav (&#9776;), stacked layout, 2-column depot spots |
+| ≤ 480 px (small phone) | Single-column depot spots, vertically stacked duty/upcoming rows |
+
+The hamburger button collapses all navigation links into a dropdown. Theme and locale switchers are grouped and remain accessible inside the expanded menu.
 
 ## Admin access
 
