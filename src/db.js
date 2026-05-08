@@ -17,10 +17,8 @@ db.exec(`
   )
 `);
 
-// Add is_admin column to existing databases that predate this column
-try {
-  db.exec('ALTER TABLE users ADD COLUMN is_admin INTEGER NOT NULL DEFAULT 0');
-} catch (_) { /* column already exists */ }
+try { db.exec('ALTER TABLE users ADD COLUMN is_admin INTEGER NOT NULL DEFAULT 0'); } catch (_) {}
+try { db.exec("ALTER TABLE users ADD COLUMN theme TEXT NOT NULL DEFAULT 'system'"); } catch (_) {}
 
 const findByOid  = db.prepare('SELECT * FROM users WHERE oid = ?');
 const findById   = db.prepare('SELECT * FROM users WHERE id = ?');
@@ -42,8 +40,9 @@ const adminUpdateUser = db.prepare(`
       updated_at   = CURRENT_TIMESTAMP
   WHERE id = @id
 `);
-const deleteUser = db.prepare('DELETE FROM users WHERE id = ?');
+const deleteUser  = db.prepare('DELETE FROM users WHERE id = ?');
 const setAdminFlag = db.prepare('UPDATE users SET is_admin = @is_admin WHERE oid = @oid');
+const updateTheme  = db.prepare("UPDATE users SET theme = @theme, updated_at = CURRENT_TIMESTAMP WHERE oid = @oid");
 
 function upsertUser({ oid, display_name, email, is_admin = 0 }) {
   const existing = findByOid.get(oid);
@@ -74,4 +73,8 @@ function removeUser(id) {
   deleteUser.run(id);
 }
 
-module.exports = { upsertUser, getUser, getUserById, getAllUsers, setPhone, adminUpdate, removeUser };
+function setTheme(oid, theme) {
+  updateTheme.run({ oid, theme });
+}
+
+module.exports = { upsertUser, getUser, getUserById, getAllUsers, setPhone, adminUpdate, removeUser, setTheme };

@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="<%= currentUser ? (currentUser.theme || 'system') : 'system' %>">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %> – MyApp</title>
   <link rel="stylesheet" href="/style.css">
+  <script>
+    (function () {
+      var pref = document.documentElement.dataset.theme || 'system';
+      function apply(p) {
+        var dark = p === 'dark' || (p === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.classList.toggle('dark', dark);
+      }
+      apply(pref);
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
+        if (document.documentElement.dataset.theme === 'system') apply('system');
+      });
+    })();
+  </script>
 </head>
 <body>
   <nav>
@@ -14,8 +27,29 @@
         <a href="/dashboard">Dashboard</a>
         <a href="/profile">Profile</a>
         <% if (currentUser.is_admin) { %><a href="/admin">Admin</a><% } %>
+        <div class="theme-switcher" title="Appearance">
+          <button class="theme-btn" data-t="light"  aria-label="Light mode">☀</button>
+          <button class="theme-btn" data-t="system" aria-label="System theme">⊙</button>
+          <button class="theme-btn" data-t="dark"   aria-label="Dark mode">☾</button>
+        </div>
         <a href="/auth/logout">Logout</a>
       <% } %>
     </div>
   </nav>
   <main>
+  <script>
+    (function () {
+      var current = document.documentElement.dataset.theme || 'system';
+      document.querySelectorAll('.theme-btn').forEach(function (btn) {
+        if (btn.dataset.t === current) btn.classList.add('active');
+        btn.addEventListener('click', function () {
+          var t = btn.dataset.t;
+          document.documentElement.dataset.theme = t;
+          var dark = t === 'dark' || (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.classList.toggle('dark', dark);
+          document.querySelectorAll('.theme-btn').forEach(function (b) { b.classList.toggle('active', b.dataset.t === t); });
+          fetch('/settings/theme', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: 'theme=' + t });
+        });
+      });
+    })();
+  </script>

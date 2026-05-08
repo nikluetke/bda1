@@ -40,6 +40,7 @@ router.get('/callback', async (req, res) => {
     display_name: user.display_name,
     email:        user.email,
     is_admin:     user.is_admin,
+    theme:        user.theme || 'system',
   };
 
   res.redirect('/dashboard');
