@@ -16,7 +16,13 @@ services:
       REDIRECT_URI: ${REDIRECT_URI}
       POST_LOGOUT_REDIRECT_URI: ${POST_LOGOUT_REDIRECT_URI}
       ADMIN_OIDS: ${ADMIN_OIDS}
+    networks:
+      - proxy
     restart: unless-stopped
 
 volumes:
   lwssoapp-data:
+
+networks:
+  proxy:
+    external: true
