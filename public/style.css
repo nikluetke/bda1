@@ -406,6 +406,7 @@ html.dark .st-maintenance { background: #3b1a1a; color: #fc8181; }
 .duty-bus        { white-space: nowrap; }
 .duty-locations  { color: var(--text-muted); margin-left: auto; }
 .duty-notes      { margin-top: .4rem; font-size: .82rem; color: var(--text-muted); font-style: italic; }
+.duty-depot-pos  { font-size: .8rem; white-space: nowrap; }
 
 /* ── Dashboard upcoming duties ──────────────────────────────── */
 .upcoming-list  { display: flex; flex-direction: column; gap: .5rem; }

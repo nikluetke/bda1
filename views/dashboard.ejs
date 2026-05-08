@@ -41,6 +41,9 @@
           <span class="upcoming-route"><%= duty.route %></span>
           <% if (duty.fleet_number) { %>
             <span class="upcoming-bus text-muted"><%= duty.fleet_number %></span>
+            <% if (duty.depot_row) { %>
+              <span class="upcoming-bus text-muted">(<%= t.label_row %>&nbsp;<%= duty.depot_row %>&thinsp;·&thinsp;<%= t.label_spot %>&nbsp;<%= duty.depot_spot %>)</span>
+            <% } %>
           <% } %>
           <span class="upcoming-loc text-muted"><%= duty.start_location %> &rarr; <%= duty.end_location %></span>
         </div>

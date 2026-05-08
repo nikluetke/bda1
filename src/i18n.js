@@ -54,6 +54,7 @@ const translations = {
     col_depot_location: 'Depot Location',
     col_status:         'Status',
     label_row:          'Row',
+    label_spot:         'Spot',
     // Admin
     user_management:    'User Management',
     heading_edit_user:  'Edit User',
@@ -146,6 +147,7 @@ const translations = {
     col_depot_location: 'Depotstandort',
     col_status:         'Status',
     label_row:          'Reihe',
+    label_spot:         'Platz',
     // Admin
     user_management:    'Benutzerverwaltung',
     heading_edit_user:  'Benutzer bearbeiten',

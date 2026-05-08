@@ -56,6 +56,9 @@
                 <div class="duty-row duty-bottom">
                   <% if (duty.fleet_number) { %>
                     <span class="duty-bus"><strong><%= duty.fleet_number %></strong>&ensp;<span class="text-muted"><%= duty.model %></span></span>
+                    <% if (duty.depot_row) { %>
+                      <span class="duty-depot-pos text-muted"><%= t.label_row %>&nbsp;<%= duty.depot_row %>&thinsp;·&thinsp;<%= t.label_spot %>&nbsp;<%= duty.depot_spot %></span>
+                    <% } %>
                   <% } else { %>
                     <span class="duty-bus text-muted"><em><%= t.no_bus_assigned %></em></span>
                   <% } %>

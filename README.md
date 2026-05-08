@@ -5,7 +5,7 @@ A web app for bus drivers to view their upcoming duty schedule and check where v
 ## Features
 
 - **SSO via Microsoft Entra** – sign in with any Microsoft organisational or personal account
-- **Duty schedule** – weekly view of assigned duties (route, time, bus, start/end stop) with prev/next week navigation
+- **Duty schedule** – weekly view of assigned duties (route, time, bus, depot location, start/end stop) with prev/next week navigation
 - **Live duty status** – duties are automatically marked as scheduled, active, or completed based on current time
 - **Depot map** – visual overview of all buses in the depot with their current status (available / in service / maintenance)
 - **Dashboard** – shows the next 3 upcoming duties at a glance

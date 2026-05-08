@@ -177,19 +177,19 @@ const listBuses      = db.prepare('SELECT * FROM buses ORDER BY depot_row, depot
 const updateBusStmt  = db.prepare('UPDATE buses SET status = @status WHERE id = @id');
 
 const dutiesByEmail  = db.prepare(`
-  SELECT d.*, b.fleet_number, b.model
+  SELECT d.*, b.fleet_number, b.model, b.depot_row, b.depot_spot
   FROM duties d LEFT JOIN buses b ON d.bus_id = b.id
   WHERE d.driver_email = ? AND d.duty_date BETWEEN ? AND ?
   ORDER BY d.duty_date, d.start_time
 `);
 const upcomingStmt   = db.prepare(`
-  SELECT d.*, b.fleet_number, b.model
+  SELECT d.*, b.fleet_number, b.model, b.depot_row, b.depot_spot
   FROM duties d LEFT JOIN buses b ON d.bus_id = b.id
   WHERE d.driver_email = ? AND d.duty_date >= ?
   ORDER BY d.duty_date, d.start_time LIMIT 3
 `);
 const allDutiesStmt  = db.prepare(`
-  SELECT d.*, b.fleet_number, b.model
+  SELECT d.*, b.fleet_number, b.model, b.depot_row, b.depot_spot
   FROM duties d LEFT JOIN buses b ON d.bus_id = b.id
   ORDER BY d.duty_date, d.start_time, d.driver_email
 `);
