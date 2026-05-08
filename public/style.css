@@ -111,7 +111,7 @@ nav {
 
 /* ── Main layout ──────────────────────────────────────────── */
 main {
-  max-width: 680px;
+  max-width: 900px;
   margin: 2.5rem auto;
   padding: 0 1rem;
 }
@@ -238,6 +238,17 @@ main {
 .tag.admin { background: var(--tag-admin-bg); color: var(--tag-admin-text); }
 
 .form.wide { max-width: 480px; }
+.form-select {
+  padding: .5rem .75rem;
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 100%;
+  background: var(--surface);
+  color: var(--text);
+  transition: var(--transition);
+}
+.form-select:focus { outline: 2px solid var(--primary); border-color: transparent; }
 .checkbox-row { display: flex; align-items: center; gap: .5rem; }
 .checkbox-row label { font-weight: 600; font-size: .9rem; margin: 0; }
 
@@ -248,3 +259,196 @@ main {
   border-radius: 4px;
   font-size: .78rem;
 }
+
+/* ── Shared utilities ─────────────────────────────────────────── */
+.text-muted    { color: var(--text-muted); }
+.nowrap        { white-space: nowrap; }
+.wide-wrap     { max-width: 900px; margin: 0 auto; }
+.card-subheading { font-size: 1.1rem; margin-bottom: 1rem; color: var(--primary); }
+.section-heading { font-size: 1.1rem; margin: 1.5rem 0 .75rem; color: var(--primary); }
+
+/* ── Page header (duties / depot) ──────────────────────────────── */
+.page-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-bottom: 1.5rem;
+}
+.page-header h1 { font-size: 1.6rem; color: var(--primary); margin: 0; }
+
+/* ── Week navigation ─────────────────────────────────────────── */
+.week-nav {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+.week-label { font-size: .9rem; color: var(--text-muted); white-space: nowrap; }
+
+/* ── Status badges ───────────────────────────────────────────── */
+.status-badge {
+  display: inline-block;
+  padding: .15rem .55rem;
+  border-radius: 20px;
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  letter-spacing: .3px;
+}
+.st-scheduled  { background: #e6f0fb; color: #0078d4; }
+.st-active     { background: #e6f4ea; color: #2e7d32; }
+.st-completed  { background: #f0f0f0; color: #666; }
+.st-available  { background: #e6f4ea; color: #2e7d32; }
+.st-in_service { background: #fff3cd; color: #856404; }
+.st-maintenance{ background: #fdecea; color: #c62828; }
+html.dark .st-scheduled   { background: #162032; color: #4da6ff; }
+html.dark .st-active      { background: #1a3327; color: #68d391; }
+html.dark .st-completed   { background: #2d3748; color: #94a3b8; }
+html.dark .st-available   { background: #1a3327; color: #68d391; }
+html.dark .st-in_service  { background: #3a2e00; color: #ffc107; }
+html.dark .st-maintenance { background: #3b1a1a; color: #fc8181; }
+
+/* ── Duties page ─────────────────────────────────────────────── */
+.no-duties-msg {
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.no-duties-msg code { background: var(--code-bg); padding: .1rem .4rem; border-radius: 4px; font-size: .85rem; }
+
+.days-list { display: flex; flex-direction: column; gap: 1rem; }
+
+.day-section {
+  background: var(--surface);
+  border-radius: 10px;
+  box-shadow: 0 1px 4px var(--shadow);
+  overflow: hidden;
+  transition: var(--transition);
+}
+.day-today { border: 2px solid var(--primary); }
+
+.day-header {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .6rem 1rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.day-today .day-header { background: var(--primary-light); }
+.day-name  { font-weight: 700; font-size: .95rem; }
+.day-date  { color: var(--text-muted); font-size: .88rem; }
+.today-chip {
+  margin-left: auto;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 20px;
+  padding: .1rem .6rem;
+  font-size: .75rem;
+  font-weight: 700;
+}
+
+.day-off {
+  padding: .75rem 1rem;
+  color: var(--text-muted);
+  font-size: .88rem;
+  font-style: italic;
+}
+
+.duty-card {
+  padding: .75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  transition: background .15s;
+}
+.duty-card:last-child { border-bottom: none; }
+.duty-card.status-active    { border-left: 3px solid #2e7d32; }
+.duty-card.status-completed { opacity: .65; }
+
+.duty-row { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; }
+.duty-top  { margin-bottom: .3rem; }
+.duty-time       { font-weight: 700; font-size: .95rem; white-space: nowrap; }
+.duty-route-name { font-size: .9rem; color: var(--primary); font-weight: 600; }
+.duty-bottom     { font-size: .85rem; }
+.duty-bus        { white-space: nowrap; }
+.duty-locations  { color: var(--text-muted); margin-left: auto; }
+.duty-notes      { margin-top: .4rem; font-size: .82rem; color: var(--text-muted); font-style: italic; }
+
+/* ── Dashboard upcoming duties ──────────────────────────────── */
+.upcoming-list  { display: flex; flex-direction: column; gap: .5rem; }
+.upcoming-item  {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .5rem;
+  padding: .5rem .75rem;
+  background: var(--bg);
+  border-radius: 6px;
+  font-size: .88rem;
+}
+.upcoming-day   { font-weight: 700; min-width: 80px; }
+.upcoming-time  { white-space: nowrap; color: var(--text-muted); }
+.upcoming-route { font-weight: 600; color: var(--primary); }
+.upcoming-bus   { font-size: .82rem; }
+.upcoming-loc   { font-size: .82rem; margin-left: auto; }
+
+/* ── Depot map ───────────────────────────────────────────────── */
+.depot-legend { display: flex; gap: 1rem; align-items: center; margin-left: auto; flex-wrap: wrap; }
+.legend-item  { display: flex; align-items: center; gap: .35rem; font-size: .85rem; }
+.legend-dot   { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.legend-dot.st-available   { background: #2e7d32; }
+.legend-dot.st-in_service  { background: #856404; }
+.legend-dot.st-maintenance { background: #c62828; }
+
+.depot-map { display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 1.5rem; }
+
+.depot-row-section { background: var(--surface); border-radius: 10px; box-shadow: 0 1px 4px var(--shadow); overflow: hidden; }
+.depot-row-label {
+  padding: .5rem 1rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  font-weight: 700;
+  font-size: .9rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.depot-spots { display: flex; flex-wrap: wrap; gap: 0; }
+
+.depot-spot {
+  flex: 1 1 180px;
+  padding: 1rem;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  transition: var(--transition);
+}
+.depot-spot:last-child { border-right: none; }
+.depot-spot.st-available   { border-top: 3px solid #2e7d32; }
+.depot-spot.st-in_service  { border-top: 3px solid #856404; }
+.depot-spot.st-maintenance { border-top: 3px solid #c62828; }
+
+.spot-fleet { font-weight: 700; font-size: 1rem; }
+.spot-model { font-size: .82rem; color: var(--text-muted); }
+
+.spot-form   { margin-top: .4rem; }
+.spot-select {
+  font-size: .8rem;
+  padding: .2rem .4rem;
+  border: 1px solid var(--input-border);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+/* ── Admin duties table extras ──────────────────────────────── */
+.date-group-start td:first-child { padding-top: .9rem; }
+.date-cell { font-weight: 600; font-size: .88rem; }

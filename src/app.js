@@ -3,9 +3,11 @@ const express = require('express');
 const session = require('express-session');
 const path    = require('path');
 
-const authRoutes  = require('./routes/auth');
-const userRoutes  = require('./routes/user');
-const adminRoutes = require('./routes/admin');
+const authRoutes   = require('./routes/auth');
+const userRoutes   = require('./routes/user');
+const adminRoutes  = require('./routes/admin');
+const dutiesRoutes = require('./routes/duties');
+const depotRoutes  = require('./routes/depot');
 
 const app = express();
 
@@ -34,6 +36,8 @@ app.use((req, res, next) => {
 
 app.use('/auth',  authRoutes);
 app.use('/admin', adminRoutes);
+app.use('/',      dutiesRoutes);
+app.use('/',      depotRoutes);
 app.use('/',      userRoutes);
 
 app.get('/', (req, res) => {

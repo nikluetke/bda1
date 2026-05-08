@@ -20,9 +20,36 @@
     </tr>
     <tr>
       <th>Object ID</th>
-      <td><code style="font-size:.8rem;background:#f0f0f0;padding:.1rem .4rem;border-radius:4px"><%= user.oid %></code></td>
+      <td><code style="font-size:.8rem;background:var(--code-bg);padding:.1rem .4rem;border-radius:4px"><%= user.oid %></code></td>
     </tr>
   </table>
   <a href="/profile" class="btn secondary">Edit Profile</a>
+</div>
+
+<div class="card" style="margin-top:1.5rem">
+  <h2 class="card-subheading">Upcoming Duties</h2>
+  <% if (upcomingDuties && upcomingDuties.length > 0) { %>
+    <div class="upcoming-list">
+      <% upcomingDuties.forEach(duty => { %>
+        <%
+          const dd = new Date(duty.duty_date + 'T00:00:00');
+          const dayLabel = dd.toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit' });
+        %>
+        <div class="upcoming-item">
+          <span class="upcoming-day"><%= dayLabel %></span>
+          <span class="upcoming-time"><%= duty.start_time %>&thinsp;&ndash;&thinsp;<%= duty.end_time %></span>
+          <span class="upcoming-route"><%= duty.route %></span>
+          <% if (duty.fleet_number) { %>
+            <span class="upcoming-bus text-muted"><%= duty.fleet_number %></span>
+          <% } %>
+          <span class="upcoming-loc text-muted"><%= duty.start_location %> &rarr; <%= duty.end_location %></span>
+        </div>
+      <% }); %>
+    </div>
+    <a href="/duties" class="btn secondary" style="margin-top:1rem;font-size:.88rem">View Full Schedule</a>
+  <% } else { %>
+    <p class="text-muted" style="font-size:.9rem">No upcoming duties found for your account.</p>
+    <a href="/duties" class="btn secondary" style="margin-top:.75rem;font-size:.88rem">View Duty Schedule</a>
+  <% } %>
 </div>
 <%- include('_footer') %>

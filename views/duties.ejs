@@ -1,0 +1,75 @@
+<%- include('_header', { title: 'My Duties' }) %>
+<div class="wide-wrap">
+  <div class="page-header">
+    <h1>My Duties</h1>
+    <div class="week-nav">
+      <a href="/duties?week=<%= weekOffset - 1 %>" class="btn secondary sm">&larr; Prev</a>
+      <span class="week-label">
+        <%= startDay.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }) %> &ndash;
+        <%= endDay.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' }) %>
+      </span>
+      <% if (weekOffset !== 0) { %>
+        <a href="/duties?week=0" class="btn secondary sm">Today</a>
+      <% } %>
+      <a href="/duties?week=<%= weekOffset + 1 %>" class="btn secondary sm">Next &rarr;</a>
+    </div>
+  </div>
+
+  <% if (!email) { %>
+    <div class="alert error">No email address on your account. Contact your administrator.</div>
+  <% } else { %>
+    <%
+      const dateKeys = Object.keys(byDate);
+      const hasAnyDuty = dateKeys.some(k => byDate[k].length > 0);
+    %>
+    <% if (!hasAnyDuty) { %>
+      <div class="no-duties-msg">
+        <p>No duties assigned for this week.</p>
+        <p class="text-muted">Signed in as <code><%= email %></code></p>
+      </div>
+    <% } %>
+
+    <div class="days-list">
+      <% dateKeys.forEach(dateStr => { %>
+        <%
+          const dayDuties = byDate[dateStr];
+          const d = new Date(dateStr + 'T00:00:00');
+          const isToday = dateStr === todayStr;
+        %>
+        <div class="day-section<%= isToday ? ' day-today' : '' %>">
+          <div class="day-header">
+            <span class="day-name"><%= d.toLocaleDateString('de-DE', { weekday: 'long' }) %></span>
+            <span class="day-date"><%= d.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }) %></span>
+            <% if (isToday) { %><span class="today-chip">Today</span><% } %>
+          </div>
+
+          <% if (dayDuties.length === 0) { %>
+            <div class="day-off">Day off</div>
+          <% } else { %>
+            <% dayDuties.forEach(duty => { %>
+              <div class="duty-card status-<%= duty.computedStatus %>">
+                <div class="duty-row duty-top">
+                  <span class="duty-time"><%= duty.start_time %>&thinsp;&ndash;&thinsp;<%= duty.end_time %></span>
+                  <span class="duty-route-name"><%= duty.route %></span>
+                  <span class="status-badge st-<%= duty.computedStatus %>"><%= duty.computedStatus %></span>
+                </div>
+                <div class="duty-row duty-bottom">
+                  <% if (duty.fleet_number) { %>
+                    <span class="duty-bus"><strong><%= duty.fleet_number %></strong>&ensp;<span class="text-muted"><%= duty.model %></span></span>
+                  <% } else { %>
+                    <span class="duty-bus text-muted"><em>No bus assigned</em></span>
+                  <% } %>
+                  <span class="duty-locations"><%= duty.start_location %> &rarr; <%= duty.end_location %></span>
+                </div>
+                <% if (duty.notes) { %>
+                  <div class="duty-notes"><%= duty.notes %></div>
+                <% } %>
+              </div>
+            <% }); %>
+          <% } %>
+        </div>
+      <% }); %>
+    </div>
+  <% } %>
+</div>
+<%- include('_footer') %>

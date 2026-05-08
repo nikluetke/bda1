@@ -28,6 +28,14 @@
       <input id="phone" name="phone" type="tel" maxlength="30"
              value="<%= user.phone || '' %>" placeholder="+1 555 000 0000">
 
+      <label for="driver_email">Assigned driver</label>
+      <select id="driver_email" name="driver_email" class="form-select">
+        <option value="">— not assigned —</option>
+        <% driverEmails.forEach(de => { %>
+          <option value="<%= de %>" <%= user.driver_email === de ? 'selected' : '' %>><%= de %></option>
+        <% }); %>
+      </select>
+
       <div class="checkbox-row">
         <input id="is_admin" name="is_admin" type="checkbox" value="on"
                <%= user.is_admin ? 'checked' : '' %>>

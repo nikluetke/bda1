@@ -1,0 +1,48 @@
+<%- include('../_header', { title: 'Admin – Duties' }) %>
+<div class="admin-wrap">
+  <div class="admin-header">
+    <h1>All Duties</h1>
+    <span class="badge"><%= duties.length %> records</span>
+    <a href="/admin" class="btn secondary sm" style="margin-left:auto">&#8592; Users</a>
+  </div>
+
+  <div class="table-wrap">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Driver</th>
+          <th>Time</th>
+          <th>Line</th>
+          <th>Bus</th>
+          <th>From &rarr; To</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% let lastDate = ''; %>
+        <% duties.forEach(d => { %>
+          <tr<%= lastDate !== d.duty_date ? ' class="date-group-start"' : '' %>>
+            <td>
+              <% if (lastDate !== d.duty_date) { %>
+                <%
+                  lastDate = d.duty_date;
+                  const dd = new Date(d.duty_date + 'T00:00:00');
+                %>
+                <span class="date-cell">
+                  <%= dd.toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit' }) %>
+                </span>
+              <% } %>
+            </td>
+            <td><%= d.driver_email %></td>
+            <td class="nowrap"><%= d.start_time %>&thinsp;&ndash;&thinsp;<%= d.end_time %></td>
+            <td><%= d.route || '—' %></td>
+            <td><%= d.fleet_number || '—' %></td>
+            <td><%= d.start_location %> &rarr; <%= d.end_location %></td>
+          </tr>
+          <% lastDate = d.duty_date; %>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%- include('../_footer') %>
