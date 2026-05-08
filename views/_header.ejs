@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> – MyApp</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <nav>
+    <span class="brand">MyApp</span>
+    <div class="nav-links">
+      <% if (currentUser) { %>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/profile">Profile</a>
+        <% if (currentUser.is_admin) { %><a href="/admin">Admin</a><% } %>
+        <a href="/auth/logout">Logout</a>
+      <% } %>
+    </div>
+  </nav>
+  <main>

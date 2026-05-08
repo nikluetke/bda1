@@ -1,0 +1,2 @@
+create a light weight webapp with sso for entra, where a first login creates a user profile in a db. the user should see his information in a dashboard and be able to edit his phone numer in his profile
+

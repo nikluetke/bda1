@@ -1,0 +1,28 @@
+<%- include('_header', { title: 'Dashboard' }) %>
+<div class="card">
+  <h1>Dashboard</h1>
+  <table class="info-table">
+    <tr>
+      <th>Name</th>
+      <td><%= user.display_name || '—' %></td>
+    </tr>
+    <tr>
+      <th>Email</th>
+      <td><%= user.email || '—' %></td>
+    </tr>
+    <tr>
+      <th>Phone</th>
+      <td><% if (user.phone) { %><%= user.phone %><% } else { %><em>not set</em><% } %></td>
+    </tr>
+    <tr>
+      <th>Member since</th>
+      <td><%= new Date(user.created_at).toLocaleDateString() %></td>
+    </tr>
+    <tr>
+      <th>Object ID</th>
+      <td><code style="font-size:.8rem;background:#f0f0f0;padding:.1rem .4rem;border-radius:4px"><%= user.oid %></code></td>
+    </tr>
+  </table>
+  <a href="/profile" class="btn secondary">Edit Profile</a>
+</div>
+<%- include('_footer') %>
