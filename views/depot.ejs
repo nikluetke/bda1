@@ -1,11 +1,11 @@
-<%- include('_header', { title: 'Depot' }) %>
+<%- include('_header', { title: t.depot }) %>
 <div class="wide-wrap">
   <div class="page-header">
-    <h1>Depot</h1>
+    <h1><%= t.depot %></h1>
     <div class="depot-legend">
-      <span class="legend-item"><span class="legend-dot st-available"></span>Available</span>
-      <span class="legend-item"><span class="legend-dot st-in_service"></span>In Service</span>
-      <span class="legend-item"><span class="legend-dot st-maintenance"></span>Maintenance</span>
+      <span class="legend-item"><span class="legend-dot st-available"></span><%= t.available %></span>
+      <span class="legend-item"><span class="legend-dot st-in_service"></span><%= t.in_service %></span>
+      <span class="legend-item"><span class="legend-dot st-maintenance"></span><%= t.maintenance %></span>
     </div>
   </div>
 
@@ -13,19 +13,19 @@
     <% const rowNames = Object.keys(rows).sort(); %>
     <% rowNames.forEach(rowName => { %>
       <div class="depot-row-section">
-        <div class="depot-row-label">Row <%= rowName %></div>
+        <div class="depot-row-label"><%= t.label_row %> <%= rowName %></div>
         <div class="depot-spots">
           <% rows[rowName].forEach(bus => { %>
             <div class="depot-spot st-<%= bus.status %>">
               <div class="spot-fleet"><%= bus.fleet_number %></div>
               <div class="spot-model"><%= bus.model %></div>
-              <span class="status-badge st-<%= bus.status %>"><%= bus.status.replace('_', ' ') %></span>
+              <span class="status-badge st-<%= bus.status %>"><%= t[bus.status] || bus.status %></span>
               <% if (currentUser && currentUser.is_admin) { %>
                 <form method="POST" action="/depot/<%= bus.id %>/status" class="spot-form">
                   <select name="status" onchange="this.form.submit()" class="spot-select">
-                    <option value="available"   <%= bus.status === 'available'   ? 'selected' : '' %>>Available</option>
-                    <option value="in_service"  <%= bus.status === 'in_service'  ? 'selected' : '' %>>In Service</option>
-                    <option value="maintenance" <%= bus.status === 'maintenance' ? 'selected' : '' %>>Maintenance</option>
+                    <option value="available"   <%= bus.status === 'available'   ? 'selected' : '' %>><%= t.available %></option>
+                    <option value="in_service"  <%= bus.status === 'in_service'  ? 'selected' : '' %>><%= t.in_service %></option>
+                    <option value="maintenance" <%= bus.status === 'maintenance' ? 'selected' : '' %>><%= t.maintenance %></option>
                   </select>
                 </form>
               <% } %>
@@ -36,15 +36,15 @@
     <% }); %>
   </div>
 
-  <h2 class="section-heading">Fleet Overview</h2>
+  <h2 class="section-heading"><%= t.fleet_overview %></h2>
   <div class="table-wrap">
     <table class="admin-table">
       <thead>
         <tr>
-          <th>Fleet No.</th>
-          <th>Model</th>
-          <th>Depot Location</th>
-          <th>Status</th>
+          <th><%= t.col_fleet_no %></th>
+          <th><%= t.col_model %></th>
+          <th><%= t.col_depot_location %></th>
+          <th><%= t.col_status %></th>
         </tr>
       </thead>
       <tbody>
@@ -52,8 +52,8 @@
           <tr>
             <td><strong><%= bus.fleet_number %></strong></td>
             <td><%= bus.model %></td>
-            <td>Row <%= bus.depot_row %>, Spot <%= bus.depot_spot %></td>
-            <td><span class="status-badge st-<%= bus.status %>"><%= bus.status.replace('_', ' ') %></span></td>
+            <td><%= t.label_row %> <%= bus.depot_row %>, Spot <%= bus.depot_spot %></td>
+            <td><span class="status-badge st-<%= bus.status %>"><%= t[bus.status] || bus.status %></span></td>
           </tr>
         <% }); %>
       </tbody>

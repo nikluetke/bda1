@@ -21,6 +21,7 @@ db.exec(`
 try { db.exec('ALTER TABLE users ADD COLUMN is_admin INTEGER NOT NULL DEFAULT 0'); } catch (_) {}
 try { db.exec("ALTER TABLE users ADD COLUMN theme TEXT NOT NULL DEFAULT 'system'"); } catch (_) {}
 try { db.exec('ALTER TABLE users ADD COLUMN driver_email TEXT'); } catch (_) {}
+try { db.exec("ALTER TABLE users ADD COLUMN locale TEXT NOT NULL DEFAULT 'en'"); } catch (_) {}
 
 // ── Buses ─────────────────────────────────────────────────────
 db.exec(`
@@ -168,6 +169,7 @@ const deleteUser     = db.prepare('DELETE FROM users WHERE id = ?');
 const setAdminFlag   = db.prepare('UPDATE users SET is_admin = @is_admin WHERE oid = @oid');
 const updateTheme    = db.prepare("UPDATE users SET theme = @theme, updated_at = CURRENT_TIMESTAMP WHERE oid = @oid");
 
+const setLocaleStmt        = db.prepare("UPDATE users SET locale = @locale WHERE oid = @oid");
 const setDriverEmailStmt   = db.prepare('UPDATE users SET driver_email = @driver_email WHERE id = @id');
 const listDriverEmails     = db.prepare('SELECT DISTINCT driver_email FROM duties ORDER BY driver_email');
 
@@ -213,6 +215,8 @@ function adminUpdate({ id, display_name, email, phone, is_admin }) {
 function removeUser(id) { deleteUser.run(id); }
 function setTheme(oid, theme)  { updateTheme.run({ oid, theme }); }
 
+function setLocale(oid, locale) { setLocaleStmt.run({ locale, oid }); }
+
 function setDriverEmail(id, driver_email) {
   setDriverEmailStmt.run({ driver_email: driver_email || null, id });
 }
@@ -228,7 +232,7 @@ function getUpcomingDuties(email, fromDate)  { return upcomingStmt.all(email, fr
 function getAllDuties()                        { return allDutiesStmt.all(); }
 
 module.exports = {
-  upsertUser, getUser, getUserById, getAllUsers, setPhone, adminUpdate, removeUser, setTheme,
+  upsertUser, getUser, getUserById, getAllUsers, setPhone, adminUpdate, removeUser, setTheme, setLocale,
   setDriverEmail, getDriverEmails,
   getAllBuses, updateBusStatus,
   getDutiesByEmail, getUpcomingDuties, getAllDuties,

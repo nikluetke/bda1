@@ -8,6 +8,7 @@ const userRoutes   = require('./routes/user');
 const adminRoutes  = require('./routes/admin');
 const dutiesRoutes = require('./routes/duties');
 const depotRoutes  = require('./routes/depot');
+const { getTranslation } = require('./i18n');
 
 const app = express();
 
@@ -31,6 +32,9 @@ app.use(session({
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.session.user || null;
+  const locale = req.session.user?.locale || 'en';
+  res.locals.locale = locale;
+  res.locals.t      = getTranslation(locale);
   next();
 });
 

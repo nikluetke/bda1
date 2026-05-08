@@ -1,7 +1,7 @@
-<%- include('_header', { title: 'Access Denied', user: null }) %>
+<%- include('_header', { title: t.access_denied_heading }) %>
 <div class="card center">
-  <h1>403 – Access Denied</h1>
-  <p>You don't have permission to view this page.</p>
-  <a href="/dashboard" class="btn secondary" style="margin-top:1.5rem">Back to Dashboard</a>
+  <h1><%= t.access_denied_heading %></h1>
+  <p><%= t.access_denied_text %></p>
+  <a href="/dashboard" class="btn secondary" style="margin-top:1.5rem"><%= t.back_to_dashboard %></a>
 </div>
 <%- include('_footer') %>

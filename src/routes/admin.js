@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 router.get('/users/:id/edit', (req, res) => {
   const user = getUserById(req.params.id);
   if (!user) return res.status(404).send('User not found');
-  res.render('admin/edit', { user, driverEmails: getDriverEmails(), saved: false, error: null });
+  res.render('admin/edit', { user, driverEmails: getDriverEmails(), saved: false, errorKey: null });
 });
 
 router.post('/users/:id/edit', (req, res) => {
@@ -24,7 +24,7 @@ router.post('/users/:id/edit', (req, res) => {
   const phoneRegex = /^[+\d\s\-().]{0,30}$/;
 
   if (phone && !phoneRegex.test(phone)) {
-    return res.render('admin/edit', { user, driverEmails: getDriverEmails(), saved: false, error: 'Invalid phone number format.' });
+    return res.render('admin/edit', { user, driverEmails: getDriverEmails(), saved: false, errorKey: 'error_phone_format' });
   }
 
   adminUpdate({
@@ -37,7 +37,7 @@ router.post('/users/:id/edit', (req, res) => {
   setDriverEmail(user.id, (driver_email || '').trim() || null);
 
   const updated = getUserById(user.id);
-  res.render('admin/edit', { user: updated, driverEmails: getDriverEmails(), saved: true, error: null });
+  res.render('admin/edit', { user: updated, driverEmails: getDriverEmails(), saved: true, errorKey: null });
 });
 
 router.post('/users/:id/delete', (req, res) => {

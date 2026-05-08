@@ -12,6 +12,7 @@ A web app for bus drivers to view their upcoming duty schedule and check where v
 - **Driver assignment** – admins can link any Entra user to a mock driver profile via the admin panel
 - **Admin panel** – manage users, assign drivers, view all duties across all drivers, update bus status
 - **Theme switcher** – per-user light / dark / system preference, saved to the database
+- **Localisation** – per-user language preference (English / German), saved to the database; all UI strings translated
 
 ## Tech stack
 
@@ -32,7 +33,8 @@ src/
 ├── db.js               – SQLite schema, mock data seed, query helpers
 └── routes/
     ├── auth.js         – /auth/login, /auth/callback, /auth/logout
-    ├── user.js         – /dashboard, /profile, /settings/theme
+    ├── i18n.js         – English / German translation strings
+    ├── user.js         – /dashboard, /profile, /settings/theme, /settings/locale
     ├── duties.js       – /duties (weekly schedule)
     ├── depot.js        – /depot, /depot/:id/status
     └── admin.js        – /admin (users + duties management)
@@ -130,6 +132,19 @@ Because drivers sign in with their real Entra account (not the mock email addres
 2. An admin clicks **Edit** on that user
 3. Select a driver from the **Assigned driver** dropdown (lists all mock driver profiles)
 4. Click **Save** — the driver immediately sees their duties on the dashboard and schedule page
+
+## Localisation
+
+The app ships with **English** (default) and **German** translations. Every user can switch language independently via the **EN | DE** buttons in the nav bar. The preference is saved per user in the database and applied on every page load.
+
+| Feature | Detail |
+|---|---|
+| Languages | English (`en`), German (`de`) |
+| Scope | All UI strings, status labels, date formatting |
+| Storage | `users.locale` column (defaults to `en`) |
+| Switching | Nav bar toggle → `POST /settings/locale` → page reload |
+
+To add another language, add a new key block to `src/i18n.js` matching the structure of the existing `en` entry, then add the locale code to the allowlist in `src/routes/user.js`.
 
 ## Admin access
 

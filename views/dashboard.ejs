@@ -1,39 +1,39 @@
-<%- include('_header', { title: 'Dashboard' }) %>
+<%- include('_header', { title: t.dashboard }) %>
 <div class="card">
-  <h1>Dashboard</h1>
+  <h1><%= t.dashboard %></h1>
   <table class="info-table">
     <tr>
-      <th>Name</th>
+      <th><%= t.label_name %></th>
       <td><%= user.display_name || '—' %></td>
     </tr>
     <tr>
-      <th>Email</th>
+      <th><%= t.label_email %></th>
       <td><%= user.email || '—' %></td>
     </tr>
     <tr>
-      <th>Phone</th>
-      <td><% if (user.phone) { %><%= user.phone %><% } else { %><em>not set</em><% } %></td>
+      <th><%= t.label_phone %></th>
+      <td><% if (user.phone) { %><%= user.phone %><% } else { %><em><%= t.not_set %></em><% } %></td>
     </tr>
     <tr>
-      <th>Member since</th>
-      <td><%= new Date(user.created_at).toLocaleDateString() %></td>
+      <th><%= t.label_member_since %></th>
+      <td><%= new Date(user.created_at).toLocaleDateString(t.date_locale) %></td>
     </tr>
     <tr>
-      <th>Object ID</th>
+      <th><%= t.label_object_id %></th>
       <td><code style="font-size:.8rem;background:var(--code-bg);padding:.1rem .4rem;border-radius:4px"><%= user.oid %></code></td>
     </tr>
   </table>
-  <a href="/profile" class="btn secondary">Edit Profile</a>
+  <a href="/profile" class="btn secondary"><%= t.edit_profile %></a>
 </div>
 
 <div class="card" style="margin-top:1.5rem">
-  <h2 class="card-subheading">Upcoming Duties</h2>
+  <h2 class="card-subheading"><%= t.upcoming_duties %></h2>
   <% if (upcomingDuties && upcomingDuties.length > 0) { %>
     <div class="upcoming-list">
       <% upcomingDuties.forEach(duty => { %>
         <%
           const dd = new Date(duty.duty_date + 'T00:00:00');
-          const dayLabel = dd.toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit' });
+          const dayLabel = dd.toLocaleDateString(t.date_locale, { weekday: 'short', day: '2-digit', month: '2-digit' });
         %>
         <div class="upcoming-item">
           <span class="upcoming-day"><%= dayLabel %></span>
@@ -46,10 +46,10 @@
         </div>
       <% }); %>
     </div>
-    <a href="/duties" class="btn secondary" style="margin-top:1rem;font-size:.88rem">View Full Schedule</a>
+    <a href="/duties" class="btn secondary" style="margin-top:1rem;font-size:.88rem"><%= t.view_full_schedule %></a>
   <% } else { %>
-    <p class="text-muted" style="font-size:.9rem">No upcoming duties found for your account.</p>
-    <a href="/duties" class="btn secondary" style="margin-top:.75rem;font-size:.88rem">View Duty Schedule</a>
+    <p class="text-muted" style="font-size:.9rem"><%= t.no_upcoming_duties %></p>
+    <a href="/duties" class="btn secondary" style="margin-top:.75rem;font-size:.88rem"><%= t.view_duty_schedule %></a>
   <% } %>
 </div>
 <%- include('_footer') %>

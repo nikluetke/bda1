@@ -1,7 +1,7 @@
-<%- include('_header', { title: 'Welcome' }) %>
+<%- include('_header', { title: t.welcome_heading }) %>
 <div class="card center">
-  <h1>Welcome to MyApp</h1>
-  <p>Sign in with your Microsoft account to continue.</p>
-  <a href="/auth/login" class="btn">Sign in with Microsoft</a>
+  <h1><%= t.welcome_heading %> to MyApp</h1>
+  <p><%= t.welcome_subtitle %></p>
+  <a href="/auth/login" class="btn"><%= t.sign_in %></a>
 </div>
 <%- include('_footer') %>

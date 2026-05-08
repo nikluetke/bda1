@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="<%= currentUser ? (currentUser.theme || 'system') : 'system' %>">
+<html lang="<%= locale %>" data-theme="<%= currentUser ? (currentUser.theme || 'system') : 'system' %>">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,26 +24,30 @@
     <span class="brand">MyApp</span>
     <div class="nav-links">
       <% if (currentUser) { %>
-        <a href="/dashboard">Dashboard</a>
-        <a href="/duties">My Duties</a>
-        <a href="/depot">Depot</a>
-        <a href="/profile">Profile</a>
-        <% if (currentUser.is_admin) { %><a href="/admin">Admin</a><% } %>
+        <a href="/dashboard"><%= t.nav_dashboard %></a>
+        <a href="/duties"><%= t.nav_my_duties %></a>
+        <a href="/depot"><%= t.nav_depot %></a>
+        <a href="/profile"><%= t.nav_profile %></a>
+        <% if (currentUser.is_admin) { %><a href="/admin"><%= t.nav_admin %></a><% } %>
         <div class="theme-switcher" title="Appearance">
           <button class="theme-btn" data-t="light"  aria-label="Light mode">☀</button>
           <button class="theme-btn" data-t="system" aria-label="System theme">⊙</button>
           <button class="theme-btn" data-t="dark"   aria-label="Dark mode">☾</button>
         </div>
-        <a href="/auth/logout">Logout</a>
+        <div class="locale-switcher" title="Language">
+          <button class="locale-btn" data-l="en">EN</button>
+          <button class="locale-btn" data-l="de">DE</button>
+        </div>
+        <a href="/auth/logout"><%= t.nav_logout %></a>
       <% } %>
     </div>
   </nav>
   <main>
   <script>
     (function () {
-      var current = document.documentElement.dataset.theme || 'system';
+      var currentTheme = document.documentElement.dataset.theme || 'system';
       document.querySelectorAll('.theme-btn').forEach(function (btn) {
-        if (btn.dataset.t === current) btn.classList.add('active');
+        if (btn.dataset.t === currentTheme) btn.classList.add('active');
         btn.addEventListener('click', function () {
           var t = btn.dataset.t;
           document.documentElement.dataset.theme = t;
@@ -51,6 +55,16 @@
           document.documentElement.classList.toggle('dark', dark);
           document.querySelectorAll('.theme-btn').forEach(function (b) { b.classList.toggle('active', b.dataset.t === t); });
           fetch('/settings/theme', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: 'theme=' + t });
+        });
+      });
+
+      var currentLocale = '<%= locale %>';
+      document.querySelectorAll('.locale-btn').forEach(function (btn) {
+        if (btn.dataset.l === currentLocale) btn.classList.add('active');
+        btn.addEventListener('click', function () {
+          if (btn.dataset.l === currentLocale) return;
+          fetch('/settings/locale', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: 'locale=' + btn.dataset.l })
+            .then(function () { location.reload(); });
         });
       });
     })();

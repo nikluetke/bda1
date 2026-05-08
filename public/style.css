@@ -82,6 +82,34 @@ nav {
 }
 .nav-links a:hover { opacity: 1; text-decoration: underline; }
 
+/* ── Locale switcher ──────────────────────────────────────── */
+.locale-switcher {
+  display: flex;
+  gap: 2px;
+  background: rgba(255,255,255,.15);
+  border-radius: 20px;
+  padding: 3px;
+}
+.locale-btn {
+  background: transparent;
+  border: none;
+  color: var(--nav-text);
+  cursor: pointer;
+  padding: 0 .55rem;
+  height: 28px;
+  border-radius: 20px;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .5px;
+  opacity: .65;
+  transition: background .15s, opacity .15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.locale-btn:hover  { opacity: 1; background: rgba(255,255,255,.2); }
+.locale-btn.active { opacity: 1; background: rgba(255,255,255,.3); }
+
 /* ── Theme switcher ───────────────────────────────────────── */
 .theme-switcher {
   display: flex;

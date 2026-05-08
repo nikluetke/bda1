@@ -1,24 +1,25 @@
-<%- include('../_header', { title: 'Admin – Users', user: null }) %>
+<%- include('../_header', { title: t.user_management }) %>
 <div class="admin-wrap">
   <div class="admin-header">
-    <h1>User Management</h1>
-    <span class="badge"><%= users.length %> user<%= users.length !== 1 ? 's' : '' %></span>
+    <h1><%= t.user_management %></h1>
+    <span class="badge"><%= users.length %> <%= users.length !== 1 ? t.user_plural : t.user_singular %></span>
+    <a href="/admin/duties" class="btn secondary sm" style="margin-left:auto"><%= t.all_duties %></a>
   </div>
 
   <% if (locals.query && query.error === 'self-delete') { %>
-    <div class="alert error">You cannot delete your own account.</div>
+    <div class="alert error"><%= t.cannot_delete_self %></div>
   <% } %>
 
   <div class="table-wrap">
     <table class="admin-table">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Admin</th>
-          <th>Joined</th>
-          <th>Actions</th>
+          <th><%= t.col_name %></th>
+          <th><%= t.col_email %></th>
+          <th><%= t.col_phone %></th>
+          <th><%= t.col_admin_flag %></th>
+          <th><%= t.col_joined %></th>
+          <th><%= t.col_actions %></th>
         </tr>
       </thead>
       <tbody>
@@ -27,14 +28,14 @@
           <td><%= u.display_name || '—' %></td>
           <td><%= u.email || '—' %></td>
           <td><%= u.phone || '—' %></td>
-          <td><% if (u.is_admin) { %><span class="tag admin">Admin</span><% } else { %>—<% } %></td>
-          <td><%= new Date(u.created_at).toLocaleDateString() %></td>
+          <td><% if (u.is_admin) { %><span class="tag admin"><%= t.col_admin_flag %></span><% } else { %>—<% } %></td>
+          <td><%= new Date(u.created_at).toLocaleDateString(t.date_locale) %></td>
           <td class="actions">
-            <a href="/admin/users/<%= u.id %>/edit" class="btn sm">Edit</a>
+            <a href="/admin/users/<%= u.id %>/edit" class="btn sm"><%= t.btn_edit %></a>
             <% if (u.oid !== currentOid) { %>
               <form method="POST" action="/admin/users/<%= u.id %>/delete" class="inline-form"
-                    onsubmit="return confirm('Delete <%= (u.display_name || u.email || 'this user').replace(/'/g, '') %>?')">
-                <button type="submit" class="btn sm danger">Delete</button>
+                    onsubmit="return confirm('<%= t.confirm_delete %> <%= (u.display_name || u.email || '').replace(/'/g, '') %>?')">
+                <button type="submit" class="btn sm danger"><%= t.btn_delete %></button>
               </form>
             <% } %>
           </td>

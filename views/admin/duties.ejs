@@ -1,21 +1,21 @@
-<%- include('../_header', { title: 'Admin – Duties' }) %>
+<%- include('../_header', { title: t.all_duties }) %>
 <div class="admin-wrap">
   <div class="admin-header">
-    <h1>All Duties</h1>
-    <span class="badge"><%= duties.length %> records</span>
-    <a href="/admin" class="btn secondary sm" style="margin-left:auto">&#8592; Users</a>
+    <h1><%= t.all_duties %></h1>
+    <span class="badge"><%= duties.length %> <%= t.records %></span>
+    <a href="/admin" class="btn secondary sm" style="margin-left:auto"><%= t.btn_back_users %></a>
   </div>
 
   <div class="table-wrap">
     <table class="admin-table">
       <thead>
         <tr>
-          <th>Date</th>
-          <th>Driver</th>
-          <th>Time</th>
-          <th>Line</th>
-          <th>Bus</th>
-          <th>From &rarr; To</th>
+          <th><%= t.col_date %></th>
+          <th><%= t.col_driver %></th>
+          <th><%= t.col_time %></th>
+          <th><%= t.col_line %></th>
+          <th><%= t.col_bus %></th>
+          <th><%= t.col_from_to %></th>
         </tr>
       </thead>
       <tbody>
@@ -29,7 +29,7 @@
                   const dd = new Date(d.duty_date + 'T00:00:00');
                 %>
                 <span class="date-cell">
-                  <%= dd.toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit' }) %>
+                  <%= dd.toLocaleDateString(t.date_locale, { weekday: 'short', day: '2-digit', month: '2-digit' }) %>
                 </span>
               <% } %>
             </td>

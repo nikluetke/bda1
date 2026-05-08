@@ -1,36 +1,36 @@
-<%- include('../_header', { title: 'Admin – Edit User', user: null }) %>
+<%- include('../_header', { title: t.heading_edit_user }) %>
 <div class="admin-wrap">
   <div class="admin-header">
-    <a href="/admin" class="btn secondary sm">← Back</a>
-    <h1>Edit User</h1>
+    <a href="/admin" class="btn secondary sm"><%= t.btn_back %></a>
+    <h1><%= t.heading_edit_user %></h1>
   </div>
 
   <% if (saved) { %>
-    <div class="alert success">Changes saved.</div>
+    <div class="alert success"><%= t.saved_success %></div>
   <% } %>
-  <% if (error) { %>
-    <div class="alert error"><%= error %></div>
+  <% if (errorKey) { %>
+    <div class="alert error"><%= t[errorKey] %></div>
   <% } %>
 
   <div class="card">
     <p class="meta">OID: <code><%= user.oid %></code> &nbsp;·&nbsp; ID: <%= user.id %></p>
 
     <form method="POST" action="/admin/users/<%= user.id %>/edit" class="form wide">
-      <label for="display_name">Display name</label>
+      <label for="display_name"><%= t.label_display_name %></label>
       <input id="display_name" name="display_name" type="text" maxlength="120"
              value="<%= user.display_name || '' %>">
 
-      <label for="email">Email</label>
+      <label for="email"><%= t.label_email %></label>
       <input id="email" name="email" type="email" maxlength="254"
              value="<%= user.email || '' %>">
 
-      <label for="phone">Phone</label>
+      <label for="phone"><%= t.label_phone %></label>
       <input id="phone" name="phone" type="tel" maxlength="30"
-             value="<%= user.phone || '' %>" placeholder="+1 555 000 0000">
+             value="<%= user.phone || '' %>" placeholder="+49 151 000 0000">
 
-      <label for="driver_email">Assigned driver</label>
+      <label for="driver_email"><%= t.label_assigned_driver %></label>
       <select id="driver_email" name="driver_email" class="form-select">
-        <option value="">— not assigned —</option>
+        <option value=""><%= t.not_assigned %></option>
         <% driverEmails.forEach(de => { %>
           <option value="<%= de %>" <%= user.driver_email === de ? 'selected' : '' %>><%= de %></option>
         <% }); %>
@@ -39,10 +39,10 @@
       <div class="checkbox-row">
         <input id="is_admin" name="is_admin" type="checkbox" value="on"
                <%= user.is_admin ? 'checked' : '' %>>
-        <label for="is_admin">Administrator</label>
+        <label for="is_admin"><%= t.label_is_admin %></label>
       </div>
 
-      <button type="submit" class="btn">Save changes</button>
+      <button type="submit" class="btn"><%= t.btn_save_changes %></button>
     </form>
   </div>
 </div>
