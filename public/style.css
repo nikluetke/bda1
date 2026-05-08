@@ -510,33 +510,36 @@ html.dark .st-maintenance { background: #3b1a1a; color: #fc8181; }
 
 /* ── Mobile (≤ 768px) ─────────────────────────────────────────── */
 @media (max-width: 768px) {
-  /* Nav: show hamburger, collapse links */
+  /* Nav: hamburger dropdown overlays the page (no layout shift) */
   nav {
-    flex-wrap: wrap;
+    position: relative;
     padding: 0 1rem;
-    height: auto;
-    min-height: 56px;
-    row-gap: 0;
+    height: 56px;
   }
   .nav-toggle { display: flex; align-items: center; justify-content: center; }
   .nav-links {
     display: none;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    background: var(--nav-bg);
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    width: 100%;
-    padding: .25rem 0 .6rem;
-    order: 3;
+    padding: .25rem 0 .75rem;
+    box-shadow: 0 6px 20px rgba(0,0,0,.25);
   }
   .nav-links.open { display: flex; }
   .nav-links a {
-    padding: .65rem .25rem;
+    padding: .7rem 1.25rem;
     font-size: .97rem;
     border-top: 1px solid rgba(255,255,255,.1);
   }
   .nav-controls {
     flex-wrap: wrap;
-    padding: .5rem .25rem .25rem;
+    padding: .6rem 1.25rem .25rem;
     border-top: 1px solid rgba(255,255,255,.1);
   }
 
