@@ -1,0 +1,22 @@
+services:
+  app:
+    image: lwssoapp
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - lwssoapp-data:/data
+    environment:
+      NODE_ENV: production
+      DATA_DIR: /data
+      AZURE_CLIENT_ID: ${AZURE_CLIENT_ID}
+      AZURE_CLIENT_SECRET: ${AZURE_CLIENT_SECRET}
+      AZURE_TENANT_ID: ${AZURE_TENANT_ID}
+      SESSION_SECRET: ${SESSION_SECRET}
+      REDIRECT_URI: ${REDIRECT_URI}
+      POST_LOGOUT_REDIRECT_URI: ${POST_LOGOUT_REDIRECT_URI}
+      ADMIN_OIDS: ${ADMIN_OIDS}
+    restart: unless-stopped
+
+volumes:
+  lwssoapp-data:
