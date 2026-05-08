@@ -47,7 +47,11 @@ router.get('/callback', async (req, res) => {
 });
 
 router.get('/logout', (req, res) => {
-  req.session.destroy(() => res.redirect('/'));
+  req.session.destroy();
+  const logoutUrl =
+    `https://login.microsoftonline.com/${process.env.AZURE_TENANT_ID}/oauth2/v2.0/logout` +
+    `?post_logout_redirect_uri=${encodeURIComponent(process.env.POST_LOGOUT_REDIRECT_URI)}`;
+  res.redirect(logoutUrl);
 });
 
 module.exports = router;
